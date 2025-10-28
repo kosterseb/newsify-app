@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route } from 'react-router'
 import { DarkModeProvider } from './contexts/DarkModeContext'
 import { ArchiveProvider } from './contexts/ArchiveContext'
 
