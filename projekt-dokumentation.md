@@ -8,7 +8,7 @@
 
 **Uddannelsessted:** Roskilde Tekniske Skole
 
-[Link til min applikaton](http://example.com/)
+[Link til min applikation](https://kosterseb.github.io/newsify-app/)
 
 ---
 
@@ -18,13 +18,108 @@
 - Sass
 - Vite
 - Vitest
-- React (JS)
-- React Routing
+- React 19 (JS)
+- React Router 7
 - API (New York Times)
-- Github Pages
+- GitHub Pages
+- GitHub Actions (CI/CD)
 - Context API (React)
 - Custom Hooks
 - localStorage
+
+---
+
+## Seneste Opdateringer og Forbedringer
+
+### React Router v7 Migration (Oktober 2025)
+
+Har opdateret projektet til at bruge den nyeste React Router v7, da `react-router-dom` er blevet deprecated. I version 7 er alle routing funktioner konsolideret i hovedpakken `react-router`.
+
+**Ændringer:**
+```bash
+# Før
+npm install react-router-dom
+
+# Efter
+npm install react-router
+```
+
+**Opdaterede imports i alle komponenter:**
+```jsx
+// Før
+import { useNavigate } from 'react-router-dom';
+
+// Efter
+import { useNavigate } from 'react-router';
+```
+
+Dette sikrer at projektet bruger den nyeste og supporterede version af React Router.
+
+### GitHub Pages Deployment Fix
+
+Løste deployment problemer hvor GitHub Pages ikke kunne opdateres via `gh-pages` npm pakken (HTTP 403 fejl). Implementerede i stedet GitHub Actions workflow for automatisk deployment.
+
+**Ny deployment workflow** (`.github/workflows/deploy.yml`):
+- Automatisk build og deploy ved push til main branch
+- Miljøvariabler (API keys) håndteres sikkert via GitHub Secrets
+- Native GitHub Pages integration
+- Bedre fejlhåndtering og logging
+
+**Fordele:**
+- ✅ Automatisk deployment ved hver push
+- ✅ Ingen manuel `npm run deploy` nødvendig
+- ✅ Sikker håndtering af API nøgler
+- ✅ Fuld CI/CD pipeline
+
+### Asset Loading Fixes
+
+**Problem:** Billeder og assets blev ikke loaded korrekt på GitHub Pages.
+
+**Løsninger implementeret:**
+1. **Rettede image imports i OnBoarding komponent:**
+   ```jsx
+   // Før (virker ikke i production)
+   const slides = [{ image: 'src/assets/first_image.png' }];
+
+   // Efter (korrekt Vite import)
+   import firstImage from '../../assets/first_image.png';
+   const slides = [{ image: firstImage }];
+   ```
+
+2. **Rettede absolute path imports til relative paths:**
+   ```jsx
+   // Før (virker ikke med GitHub Pages base path)
+   import OpenedArrow from '/src/assets/opened-arrow.svg';
+
+   // Efter (korrekt relative path)
+   import OpenedArrow from '../../assets/opened-arrow.svg';
+   ```
+
+3. **Fjernede localhost development script fra production:**
+   ```html
+   <!-- Fjernet fra index.html -->
+   <script src="http://localhost:8097"></script>
+   ```
+
+4. **Rettede SASS fil case sensitivity:**
+   ```jsx
+   // Før
+   import './Home.sass';  // Fil hedder faktisk home.sass
+
+   // Efter
+   import './home.sass';  // Matcher faktisk filnavn
+   ```
+
+### Environment Variables Setup
+
+Oprettet `.env.example` fil med dokumentation for påkrævet API nøgle:
+```env
+# New York Times API Key
+# Get your API key from: https://developer.nytimes.com/get-started
+VITE_NYT_API_KEY=your_api_key_here
+```
+
+Dette gør det nemmere for andre at sætte projektet op lokalt.
 
 ---
 
@@ -62,11 +157,12 @@ Har installeret følgende dependencies via npm:
 
 ```bash
 npm create vite@latest .
-npm install react-router-dom
+npm install react-router
 npm install -D sass
+npm install -D vitest
 ```
 
-**React Router** bruges til navigation mellem sider uden page reload, hvilket giver en bedre brugeroplevelse.
+**React Router v7** bruges til navigation mellem sider uden page reload, hvilket giver en bedre brugeroplevelse. Projektet er migrated fra den deprecerede `react-router-dom` pakke til den nye konsoliderede `react-router` pakke.
 
 **Sass** bruges til styling med nested rules, variables og mixins for mere maintainable CSS.
 
@@ -74,9 +170,9 @@ npm install -D sass
 
 ## Argumentation for de valg du selvstændigt har truffet under løsningen af opgaven
 
-### 1. React Routing
+### 1. React Router v7
 
-Har valgt at bruge **React Router DOM** til at navigere gennem de forskellige sider. Dette giver en Single Page Application (SPA) oplevelse hvor siden ikke reloader ved navigation.
+Har valgt at bruge **React Router 7** til at navigere gennem de forskellige sider. Dette giver en Single Page Application (SPA) oplevelse hvor siden ikke reloader ved navigation. Bruger den nyeste version (v7) hvor alle routing funktioner er konsolideret i `react-router` pakken.
 
 ```jsx
 function App() {
