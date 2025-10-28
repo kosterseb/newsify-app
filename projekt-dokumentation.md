@@ -29,9 +29,9 @@
 
 ---
 
-## Seneste Opdateringer og Forbedringer
+## Nye Opdateringer og Forbedringer
 
-### React Router v7 Migration (Oktober 2025)
+### React Router v7 Migration (Efter aflevering)
 
 Har opdateret projektet til at bruge den nyeste React Router v7, da `react-router-dom` er blevet deprecated. I version 7 er alle routing funktioner konsolideret i hovedpakken `react-router`.
 
@@ -66,62 +66,11 @@ Løste deployment problemer hvor GitHub Pages ikke kunne opdateres via `gh-pages
 - Bedre fejlhåndtering og logging
 
 **Fordele:**
-- ✅ Automatisk deployment ved hver push
-- ✅ Ingen manuel `npm run deploy` nødvendig
-- ✅ Sikker håndtering af API nøgler
-- ✅ Fuld CI/CD pipeline
+- Automatisk deployment ved hver push
+- Ingen manuel `npm run deploy` nødvendig
+- Sikker håndtering af API nøgler
+- Fuld CI/CD pipeline
 
-### Asset Loading Fixes
-
-**Problem:** Billeder og assets blev ikke loaded korrekt på GitHub Pages.
-
-**Løsninger implementeret:**
-1. **Rettede image imports i OnBoarding komponent:**
-   ```jsx
-   // Før (virker ikke i production)
-   const slides = [{ image: 'src/assets/first_image.png' }];
-
-   // Efter (korrekt Vite import)
-   import firstImage from '../../assets/first_image.png';
-   const slides = [{ image: firstImage }];
-   ```
-
-2. **Rettede absolute path imports til relative paths:**
-   ```jsx
-   // Før (virker ikke med GitHub Pages base path)
-   import OpenedArrow from '/src/assets/opened-arrow.svg';
-
-   // Efter (korrekt relative path)
-   import OpenedArrow from '../../assets/opened-arrow.svg';
-   ```
-
-3. **Fjernede localhost development script fra production:**
-   ```html
-   <!-- Fjernet fra index.html -->
-   <script src="http://localhost:8097"></script>
-   ```
-
-4. **Rettede SASS fil case sensitivity:**
-   ```jsx
-   // Før
-   import './Home.sass';  // Fil hedder faktisk home.sass
-
-   // Efter
-   import './home.sass';  // Matcher faktisk filnavn
-   ```
-
-### Environment Variables Setup
-
-Oprettet `.env.example` fil med dokumentation for påkrævet API nøgle:
-```env
-# New York Times API Key
-# Get your API key from: https://developer.nytimes.com/get-started
-VITE_NYT_API_KEY=your_api_key_here
-```
-
-Dette gør det nemmere for andre at sætte projektet op lokalt.
-
----
 
 ## Redegørelse for oprindelsen af evt. tredjeparts kode anvendt i opgaveløsningen
 
